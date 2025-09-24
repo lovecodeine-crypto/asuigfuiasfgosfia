@@ -21,8 +21,8 @@
             --gold: #FFD700;
             --dark: #0F0F1E;
             --darker: #0A0A14;
-            --light: #FFFFFF; /* Сделал белее */
-            --gray: #E0E0E0; /* Сделал светлее */
+            --light: #FFFFFF;
+            --gray: #E0E0E0;
         }
 
         body {
@@ -72,6 +72,15 @@
             background: linear-gradient(to right, var(--accent), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Бургер-меню */
+        .burger-menu {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--light);
+            cursor: pointer;
+            z-index: 1001;
         }
 
         nav ul {
@@ -212,7 +221,7 @@
             margin-top: 2.5rem;
         }
 
-        /* Анимация фона - сделал заметнее */
+        /* Анимация фона */
         .animated-bg {
             position: absolute;
             top: 0;
@@ -227,8 +236,8 @@
             position: absolute;
             border-radius: 50%;
             animation: floatBg 15s infinite linear;
-            opacity: 0.8; /* Увеличил прозрачность */
-            filter: blur(15px); /* Уменьшил размытие */
+            opacity: 0.8;
+            filter: blur(15px);
         }
 
         .bg-element:nth-child(1) {
@@ -650,21 +659,43 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 1rem;
-                gap: 1rem;
+            .burger-menu {
+                display: block;
             }
-            
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 20, 0.98);
+                backdrop-filter: blur(10px);
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                transform: translateY(-150%);
+                transition: transform 0.4s ease, opacity 0.4s ease;
+                opacity: 0;
+                z-index: 999;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
             nav ul {
-                margin: 1rem 0;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem 2rem;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.2rem;
+            }
+
+            .header-buttons {
+                display: none;
             }
             
-            .header-buttons {
-                display: none; /* Скрываем кнопку "Забронировать" в мобильной версии */
+            header {
+                flex-direction: row;
+                padding: 1rem 2rem;
             }
             
             .hero h1 {
@@ -691,7 +722,7 @@
             }
             
             .bg-element {
-                opacity: 0.9; /* Делаем анимации заметнее на мобильных */
+                opacity: 0.9;
                 filter: blur(10px);
             }
             
@@ -705,8 +736,7 @@
 
         @media (max-width: 480px) {
             nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.8rem;
             }
             
             .hero h1 {
@@ -739,11 +769,14 @@
             <span class="logo-text">Ателье Игр</span>
         </a>
         
-        <nav>
+        <div class="burger-menu" id="burgerMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="mainNav">
             <ul>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#workshops">Мастерские</a></li>
-                <!-- Убрал галерею -->
                 <li><a href="#reviews">Отзывы</a></li>
                 <li><a href="#contacts">Контакты</a></li>
             </ul>
@@ -871,7 +904,6 @@
                     <div class="social-links">
                         <a href="#"><i class="fab fa-vk"></i></a>
                         <a href="#"><i class="fab fa-telegram"></i></a>
-                       
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
@@ -910,7 +942,7 @@
     </footer>
 
     <script>
-        // Плавная прокрутка для навигации
+        // Плавная прокрутка
         document.querySelectorAll('nav a, .hero-buttons a, .btn').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -922,12 +954,34 @@
                             top: targetElement.offsetTop - 100,
                             behavior: 'smooth'
                         });
+                        // Закрыть меню после клика (на мобилке)
+                        const nav = document.getElementById('mainNav');
+                        if (nav.classList.contains('active')) {
+                            nav.classList.remove('active');
+                            document.querySelector('.burger-menu i').className = 'fas fa-bars';
+                        }
                     }
                 }
             });
         });
 
-        // Анимация появления элементов при прокрутке
+        // Бургер-меню
+        const burger = document.getElementById('burgerMenu');
+        const nav = document.getElementById('mainNav');
+
+        if (burger && nav) {
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                const icon = burger.querySelector('i');
+                if (nav.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-bars';
+                }
+            });
+        }
+
+        // Анимация появления при прокрутке
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -942,7 +996,6 @@
             });
         }, observerOptions);
 
-        // Наблюдаем за карточками мастерских
         document.querySelectorAll('.workshop-card').forEach(card => {
             card.style.opacity = 0;
             card.style.transform = 'translateY(40px)';
@@ -950,10 +1003,9 @@
             observer.observe(card);
         });
 
-        // Наблюдаем за секцией "О нас"
         document.querySelectorAll('.about-text, .about-image').forEach(el => {
             el.style.opacity = 0;
-            el.style.transform = 'translateX(-30px)';
+            el.style.transform = el.classList.contains('about-image') ? 'translateX(30px)' : 'translateX(-30px)';
             el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(el);
         });
@@ -970,15 +1022,17 @@
             }
         });
 
-        // Анимация для кнопки "Забронировать" в хедере (только на десктопе)
+        // Анимация кнопки "Забронировать" (только на десктопе)
         if (window.innerWidth > 768) {
             const bookButton = document.querySelector('.header-buttons .btn');
-            setInterval(() => {
-                bookButton.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    bookButton.style.transform = 'scale(1)';
-                }, 500);
-            }, 3000);
+            if (bookButton) {
+                setInterval(() => {
+                    bookButton.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        bookButton.style.transform = 'scale(1)';
+                    }, 500);
+                }, 3000);
+            }
         }
     </script>
 </body>
