@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ателье игр - Мастерская праздников</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #8A2BE2;
+            --secondary: #FF6B6B;
+            --accent: #4ECDC4;
+            --gold: #FFD700;
+            --dark: #0F0F1E;
+            --darker: #0A0A14;
+            --light: #FFFFFF; /* Сделал белее */
+            --gray: #E0E0E0; /* Сделал светлее */
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1a1a2e 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1.2rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo-icon {
+            color: var(--gold);
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .logo-text {
+            background: linear-gradient(to right, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--accent), var(--gold));
+            transition: width 0.4s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.5);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 3;
+            animation: fadeInUp 1.2s ease-out;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent), var(--gold), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        /* Анимация фона - сделал заметнее */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatBg 15s infinite linear;
+            opacity: 0.8; /* Увеличил прозрачность */
+            filter: blur(15px); /* Уменьшил размытие */
+        }
+
+        .bg-element:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.5) 0%, transparent 70%);
+            animation-duration: 20s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -3s;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.4) 0%, transparent 70%);
+            animation-duration: 25s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 500px;
+            height: 500px;
+            top: 30%;
+            left: 70%;
+            animation-delay: -6s;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, transparent 70%);
+            animation-duration: 30s;
+        }
+
+        .bg-element:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            top: 70%;
+            left: 10%;
+            animation-delay: -4s;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+            animation-duration: 22s;
+        }
+
+        .bg-element:nth-child(5) {
+            width: 250px;
+            height: 250px;
+            top: 20%;
+            left: 60%;
+            animation-delay: -8s;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+            animation-duration: 28s;
+        }
+
+        .bg-element:nth-child(6) {
+            width: 450px;
+            height: 450px;
+            top: 50%;
+            left: 20%;
+            animation-delay: -10s;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.3) 0%, transparent 70%);
+            animation-duration: 35s;
+        }
+
+        /* Секции */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 20px;
+            color: var(--light);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--gold));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* О нас */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(255, 107, 107, 0.1));
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 350px;
+        }
+
+        .about-image i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .about-image h3 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .about-image p {
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* Мастерские */
+        .workshops {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        .workshop-card {
+            background: linear-gradient(145deg, rgba(30, 30, 50, 0.7), rgba(20, 20, 40, 0.9));
+            border-radius: 20px;
+            padding: 35px 30px;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .workshop-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--gold));
+        }
+
+        .workshop-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(145deg, rgba(40, 40, 60, 0.8), rgba(25, 25, 45, 0.9));
+        }
+
+        .workshop-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .workshop-title {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .workshop-description {
+            margin-bottom: 20px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .workshop-rounds {
+            font-style: italic;
+            color: var(--gold);
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .workshop-rounds::before {
+            content: '⏱️';
+            font-style: normal;
+        }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, #6A11CB 50%, var(--secondary) 100%);
+            text-align: center;
+            padding: 100px 0;
+            border-radius: 25px;
+            margin: 70px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(to bottom, rgba(10, 10, 20, 0.95), rgba(5, 5, 15, 0.98));
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            bottom: 0;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-column a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes floatBg {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(100px, 0) rotate(180deg);
+            }
+            75% {
+                transform: translate(50px, -50px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1100px) {
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .about-image {
+                order: -1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                margin: 1rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem 2rem;
+            }
+            
+            .header-buttons {
+                display: none; /* Скрываем кнопку "Забронировать" в мобильной версии */
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .workshops {
+                grid-template-columns: 1fr;
+            }
+            
+            .bg-element {
+                opacity: 0.9; /* Делаем анимации заметнее на мобильных */
+                filter: blur(10px);
+            }
+            
+            .bg-element:nth-child(1),
+            .bg-element:nth-child(2) {
+                display: block;
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta h2 {
+                font-size: 2rem;
+            }
+            
+            .cta p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <a href="#" class="logo">
+            <i class="fas fa-chess-queen logo-icon"></i>
+            <span class="logo-text">Ателье Игр</span>
+        </a>
+        
+        <nav>
+            <ul>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#workshops">Мастерские</a></li>
+                <!-- Убрал галерею -->
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-buttons">
+            <a href="#contacts" class="btn btn-primary">Забронировать</a>
+        </div>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="animated-bg">
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>Мастерская, где создаются игры и проводятся праздники</h1>
+                <p>Ателье – это дом, где можно расслабиться, одеться, как пожелаете нужным и забыть то, что вас тревожит в жизни. Оно создано для того, чтобы вы смогли встретиться с близкими по духу людьми, вспомнить прошлое, прожить настоящее и подумать о будущем.</p>
+                <div class="hero-buttons">
+                    <a href="#workshops" class="btn btn-primary">Выбрать игру</a>
+                    <a href="#about" class="btn btn-outline">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О нас -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>О нашем Ателье</h2>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Ателье – это дом, где можно расслабиться, одеться, как пожелаете нужным и забыть то, что вас тревожит в жизни. Оно создано для того, чтобы вы смогли встретиться с близкими по духу людьми, вспомнить прошлое, прожить настоящее и подумать о будущем.</p>
+                    <p>Проще говоря, вы собираете команду, приходите к нам и невероятно весело проводите время, отвечая на интересные вопросы, соревнуясь с другими гостями или же узнаете и открываете для себя что-то новое.</p>
+                    <p>Всего существует пять мастерских ателье: тематик, музыкалити, музыкальное лото, квизо-морской бой, а также микс.</p>
+                </div>
+                
+                <div class="about-image">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Игровое пространство</h3>
+                    <p>Уютная атмосфера, современное оборудование и разнообразные форматы игр для любого настроения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Мастерские -->
+    <section id="workshops">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши мастерские</h2>
+            </div>
+            
+            <div class="workshops">
+                <div class="workshop-card">
+                    <div class="workshop-icon"><i class="fas fa-film"></i></div>
+                    <h3 class="workshop-title">Тематик</h3>
+                    <p class="workshop-description">Игра, посвященная конкретной теме, области знаний или увлечений (кино, школа, спорт и т.д.).</p>
+                    <p class="workshop-rounds">Состоит из 8 раундов</p>
+                </div>
+                
+                <div class="workshop-card">
+                    <div class="workshop-icon"><i class="fas fa-music"></i></div>
+                    <h3 class="workshop-title">Музыкалити</h3>
+                    <p class="workshop-description">Игра, посвященная музыке, начиная от легких вопросов, продолжая викториной и заканчивая коллективным караоке.</p>
+                    <p class="workshop-rounds">Состоит из 6 раундов</p>
+                </div>
+                
+                <div class="workshop-card">
+                    <div class="workshop-icon"><i class="fas fa-dice"></i></div>
+                    <h3 class="workshop-title">Музыкальное лото</h3>
+                    <p class="workshop-description">Игра в формате обычного лото, в которое мы все играли в детстве, только вместо чисел – музыкальные композиции.</p>
+                    <p class="workshop-rounds">Состоит из 3 раундов</p>
+                </div>
+                
+                <div class="workshop-card">
+                    <div class="workshop-icon"><i class="fas fa-ship"></i></div>
+                    <h3 class="workshop-title">Квизо-морской бой</h3>
+                    <p class="workshop-description">Игра, где правила каждый раз будут комбинировать и меняться друг с другом, но всегда в формате морского боя.</p>
+                    <p class="workshop-rounds">Состоит из 4 раундов</p>
+                </div>
+                
+                <div class="workshop-card">
+                    <div class="workshop-icon"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3 class="workshop-title">Микс</h3>
+                    <p class="workshop-description">Игра, которая вместила в себя все элементы мастерских «Ателье».</p>
+                    <p class="workshop-rounds">Состоит из 4 раундов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы окунуться в мир увлекательных игр и веселья?</h2>
+                <p>Соберите команду, выберите мастерскую и забронируйте дату для незабываемого времяпрепровождения!</p>
+                <a href="#contacts" class="btn btn-outline" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Забронировать игру</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts">
+        <div class="container">
+            <div class="section-title">
+                <h2>Контакты</h2>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Ателье Игр</h3>
+                    <p>Мастерская, где создаются игры и проводятся праздники. Место, где можно расслабиться и весело провести время с друзьями.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                       
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Мастерские</h3>
+                    <ul>
+                        <li><a href="#workshops">Тематик</a></li>
+                        <li><a href="#workshops">Музыкалити</a></li>
+                        <li><a href="#workshops">Музыкальное лото</a></li>
+                        <li><a href="#workshops">Квизо-морской бой</a></li>
+                        <li><a href="#workshops">Микс</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Примерная, 123</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@atelier-games.ru</li>
+                        <li><i class="fas fa-clock"></i> Ежедневно с 12:00 до 23:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2025 Ателье Игр. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка для навигации
+        document.querySelectorAll('nav a, .hero-buttons a, .btn').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Анимация появления элементов при прокрутке
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками мастерских
+        document.querySelectorAll('.workshop-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Наблюдаем за секцией "О нас"
+        document.querySelectorAll('.about-text, .about-image').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateX(-30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Изменение шапки при прокрутке
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '0.8rem 2rem';
+                header.style.background = 'rgba(10, 10, 20, 0.98)';
+            } else {
+                header.style.padding = '1.2rem 2rem';
+                header.style.background = 'rgba(15, 15, 30, 0.95)';
+            }
+        });
+
+        // Анимация для кнопки "Забронировать" в хедере (только на десктопе)
+        if (window.innerWidth > 768) {
+            const bookButton = document.querySelector('.header-buttons .btn');
+            setInterval(() => {
+                bookButton.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    bookButton.style.transform = 'scale(1)';
+                }, 500);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
