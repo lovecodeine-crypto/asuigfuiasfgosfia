@@ -6,7 +6,152 @@
   <title>Ателье | Мастерская квизов | Омск</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Подключаем Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* Стили для загрузочного экрана */
+    :root {
+      --bg: #F6F3EE;
+      --card: #FFFFFF;
+      --text: #7a6a63;
+      --muted: #5D4C45;
+      --accent: #C1966A;
+      --accent-dark: #8b5e3c;
+      --pastel: #FAF7F4;
+      --brown: #8B5E3C;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--pastel) 0%, var(--bg) 100%);
+      font-family: 'Inter', system-ui, sans-serif;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader-content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 4rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Сетка на фоне */
+    .grid-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(123, 110, 102, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(123, 110, 102, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 0;
+    }
+
+    .logo-grid {
+      display: inline-grid;
+      grid-template-columns: auto 2px auto;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo-text {
+      font-size: 2.8rem;
+      font-weight: 700;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Ателье появляется первым */
+    .atelier {
+      animation-delay: 0.2s;
+    }
+
+    /* Мастерская квизов появляется вторым */
+    .workshop {
+      animation-delay: 0.6s;
+    }
+
+    .separator-vertical {
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.4s forwards;
+    }
+
+    .description-block {
+      margin-bottom: 2.5rem;
+    }
+
+    .description {
+      font-size: 1.4rem;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeInUp 0.5s ease-out 1s forwards;
+    }
+
+    .location-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 2.5rem;
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 25px;
+      color: var(--accent-dark);
+      font-weight: 500;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 1.2s forwards;
+      box-shadow: 0 8px 20px rgba(193, 150, 106, 0.15);
+    }
+
+    /* Анимации */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Цвета текста */
+    .atelier {
+      color: var(--muted); /* Темный */
+    }
+
+    .workshop {
+      color: var(--brown); /* Коричневый */
+    }
+
+    /* Основные стили сайта */
     :root{
       --bg: #F6F3EE;
       --card: #FFFFFF;
@@ -192,37 +337,35 @@
     @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
     .visible{opacity:1 !important;transform:translateY(0) !important;}
 
-    /* WhatsApp иконка */
-    .whatsapp-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #25D366;
+    /* Социальные иконки */
+    .social-icons {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-    
-    .whatsapp-icon:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-    }
-    
-    .whatsapp-icon svg {
-      width: 30px;
-      height: 30px;
-      fill: white;
-    }
-    
-    .social-container {
-      display: flex;
-      align-items: center;
       gap: 16px;
       margin-top: 12px;
     }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Цвета для каждой соцсети */
+    .tg { background-color: #0088cc; }     /* Telegram */
+    .vk { background-color: #4c75a3; }     /* VK */
+    .wa { background-color: #25d366; }     /* WhatsApp */
 
     /* Мобильное меню */
     .mobile-menu {
@@ -316,14 +459,10 @@
         gap: 20px;
       }
       
-      .whatsapp-icon {
-        width: 30px;
-        height: 30px;
-      }
-      
-      .whatsapp-icon svg {
-        width: 30px;
-        height: 30px;
+      .social-icons a {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
       }
     }
     
@@ -336,9 +475,9 @@
       .hero-left h2{font-size:28px}
       .brand h1{font-size:16px}
       
-      .social-container {
-        flex-direction: column;
-        align-items: flex-start;
+      .social-icons {
+        flex-direction: row;
+        align-items: center;
         gap: 12px;
       }
     }
@@ -390,289 +529,341 @@
       color: var(--accent-dark);
       border: 1px solid rgba(139,94,60,0.1);
     }
+
+    /* Скрыть основной контент до загрузки */
+    #main-content {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #main-content.loaded {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header id="header">
-      <a class="brand" href="#">
-        <img class="brand-logo" src="Б2.png" alt="Ателье">
-        <div>
-          <h1>Ателье | Мастерская квизов | Омск</h1>
-          <p>Пространство для встреч и общения</p>
+  <!-- Загрузочный экран -->
+  <div id="loader">
+    <div class="grid-background"></div>
+    
+    <div class="modern-loader">
+      <div class="logo-grid">
+        <div class="logo-text atelier">
+          Ателье
         </div>
-      </a>
-
-      <div class="burger-menu" id="burgerMenu">
-        <span></span>
-        <span></span>
-        <span></span>
+        
+        <div class="separator-vertical"></div>
+        
+        <div class="logo-text workshop">
+          Мастерская квизов
+        </div>
       </div>
+      
+      <div class="description-block">
+        <div class="description">
+          Пространство для встреч и общения
+        </div>
+      </div>
+      
+      <div class="location-chip">
+        <span>📍</span>
+        <span>Омск</span>
+      </div>
+    </div>
+  </div>
 
-      <nav aria-label="Главное меню">
+  <!-- Основной контент -->
+  <div id="main-content">
+    <div class="wrap">
+      <header id="header">
+        <a class="brand" href="#">
+          <img class="brand-logo" src="Б2.png" alt="Ателье">
+          <div>
+            <h1>Ателье | Мастерская квизов | Омск</h1>
+            <p>Пространство для встреч и общения</p>
+          </div>
+        </a>
+
+        <div class="burger-menu" id="burgerMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <nav aria-label="Главное меню">
+          <a href="#about">О нас</a>
+          <a href="#workshops">Мастерские</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+
+        <a href="#contacts" class="cta desktop">Присоединиться</a>
+      </header>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" id="closeMenu">×</div>
         <a href="#about">О нас</a>
         <a href="#workshops">Мастерские</a>
         <a href="#contacts">Контакты</a>
-      </nav>
+      </div>
 
-      <a href="#contacts" class="cta desktop">Присоединиться</a>
-    </header>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <div class="close-menu" id="closeMenu">×</div>
-      <a href="#about">О нас</a>
-      <a href="#workshops">Мастерские</a>
-      <a href="#contacts">Контакты</a>
-    </div>
-
-    <main>
-      <section class="hero">
-        <div class="hero-left">
-          <h2>Ателье — дом, где можно расслабиться и забыть тревоги</h2>
-          <p>Ателье — это пространство, созданное для встреч с близкими по духу людьми, где можно вспомнить прошлое, прожить настоящее и подумать о будущем. Здесь вы можете одеться, как пожелаете, и провести время в уютной атмосфере, отвечая на интересные вопросы, соревнуясь или открывая для себя что-то новое.</p>
-          
-          <div class="features">
-            <div class="feature-item">
-              <div class="feature-icon">🎯</div>
-              <div class="feature-text">
-                <div class="feature-title">Встреча с близкими по духу</div>
-                <div class="feature-desc">Общайтесь в комфортной атмосфере</div>
+      <main>
+        <section class="hero">
+          <div class="hero-left">
+            <h2>Ателье — дом, где можно расслабиться и забыть тревоги</h2>
+            <p>Ателье — это пространство, созданное для встреч с близкими по духу людьми, где можно вспомнить прошлое, прожить настоящее и подумать о будущем. Здесь вы можете одеться, как пожелаете, и провести время в уютной атмосфере, отвечая на интересные вопросы, соревнуясь или открывая для себя что-то новое.</p>
+            
+            <div class="features">
+              <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-text">
+                  <div class="feature-title">Встреча с близкими по духу</div>
+                  <div class="feature-desc">Общайтесь в комфортной атмосфере</div>
+                </div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">👥</div>
-              <div class="feature-text">
-                <div class="feature-title">Для компаний 2-20 человек</div>
-                <div class="feature-desc">Под любую группу</div>
+              <div class="feature-item">
+                <div class="feature-icon">👥</div>
+                <div class="feature-text">
+                  <div class="feature-title">Для компаний 2-20 человек</div>
+                  <div class="feature-desc">Под любую группу</div>
+                </div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">⏱️</div>
-              <div class="feature-text">
-                <div class="feature-title">От 60 до 120 минут</div>
-                <div class="feature-desc">Идеальный тайминг</div>
+              <div class="feature-item">
+                <div class="feature-icon">⏱️</div>
+                <div class="feature-text">
+                  <div class="feature-title">От 60 до 120 минут</div>
+                  <div class="feature-desc">Идеальный тайминг</div>
+                </div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">🎪</div>
-              <div class="feature-text">
-                <div class="feature-title">Пространство для общения</div>
-                <div class="feature-desc">Создаём атмосферу уюта</div>
+              <div class="feature-item">
+                <div class="feature-icon">🎪</div>
+                <div class="feature-text">
+                  <div class="feature-title">Пространство для общения</div>
+                  <div class="feature-desc">Создаём атмосферу уюта</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <aside class="hero-right">
-          <div class="card"> 
-            <strong>Как присоединиться</strong>
-            <p class="muted small" style="margin-top:12px">Просто соберите команду друзей и приходите к нам. Выберите одну из пяти мастерских, и наш ведущий поможет вам погрузиться в атмосферу игры и общения.</p>
+          <aside class="hero-right">
+            <div class="card"> 
+              <strong>Как присоединиться</strong>
+              <p class="muted small" style="margin-top:12px">Просто соберите команду друзей и приходите к нам. Выберите одну из пяти мастерских, и наш ведущий поможет вам погрузиться в атмосферу игры и общения.</p>
+            </div>
+
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                <div>
+                  <div class="ks">Адрес</div>
+                  <div style="font-weight:600;margin-top:4px">г. Омск</div>
+                </div>
+              </div>
+              <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(139,94,60,0.08)">
+                <div class="ks">Телефон</div>
+                <div style="font-weight:600;margin-top:4px">+7-951-424-66-70</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section id="workshops">
+          <div class="section-title">
+            <h3>Мастерские Ателье</h3>
+            <div class="ks">Пять уникальных форматов для общения и отдыха</div>
           </div>
 
+          <div class="grid">
+            <article class="quiz">
+              <div class="quiz-duration">8 раундов</div>
+              <img class="img" src="Тематик 2.png" alt="Тематик">
+              <div class="meta">
+                <h4>Тематик</h4>
+                <p>Игра, посвященная конкретной теме, области знаний или увлечений (кино, школа, спорт и т.д.).</p>
+              </div>
+            </article>
+            
+            <article class="quiz">
+              <div class="quiz-duration">6 раундов</div>
+              <img class="img" src="Музыкалити .png" alt="Музыкалити">
+              <div class="meta">
+                <h4>Музыкалити</h4>
+                <p>Музыкальная игра, начиная от легких вопросов, продолжая викториной и заканчивая коллективным караоке.</p>
+              </div>
+            </article>
+            
+            <article class="quiz">
+              <div class="quiz-duration">3 раунда</div>
+              <img class="img" src="Музлото.png" alt="Музыкальное лото">
+              <div class="meta">
+                <h4>Музыкальное лото</h4>
+                <p>Ностальгическое лото, где вместо чисел — музыкальные композиции. Вспомните песни из детства и юности.</p>
+              </div>
+            </article>
+            
+            <article class="quiz">
+              <div class="quiz-duration">4 раунда</div>
+              <img class="img" src="Морской бой.png" alt="Квизо-морской бой">
+              <div class="meta">
+                <h4>Квизо-морской бой</h4>
+                <p>Игра, где правила каждый раз комбинируются и меняются, но всегда в формате морского боя.</p>
+              </div>
+            </article>
+            
+            <article class="quiz">
+              <div class="quiz-duration">4 раунда</div>
+              <img class="img" src="Микс.png" alt="Микс">
+              <div class="meta">
+                <h4>Микс</h4>
+                <p>Игра, которая вместила в себя все элементы мастерских «Ателье» — идеальный вариант для первого знакомства.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="about" style="margin-top:40px">
           <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start">
-              <div>
-                <div class="ks">Адрес</div>
-                <div style="font-weight:600;margin-top:4px">г. Омск</div>
+            <h3 style="margin-top:0;font-size:28px">Философия Ателье</h3>
+            <p class="muted" style="margin-top:16px;font-size:16px;line-height:1.7">
+              Ателье — это дом, где можно расслабиться, одеться, как пожелаете, и забыть то, что вас тревожит в жизни. 
+              Мы создали это пространство для того, чтобы вы смогли встретиться с близкими по духу людьми, вспомнить прошлое, 
+              прожить настоящее и подумать о будущем. Наша философия — создание атмосферы, где игры становятся лишь поводом 
+              для настоящего человеческого общения.
+            </p>
+            <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
+              <div class="pill">✓ Пространство для общения</div>
+              <div class="pill">✓ Уютная атмосфера</div>
+              <div class="pill">✓ Близкие по духу люди</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contacts" style="margin-top:60px">
+          <div class="section-title">
+            <h3>Присоединяйтесь</h3>
+            <div class="ks">Приходите в гости — как к друзьям</div>
+          </div>
+
+          <div class="footer-grid">
+            <div class="card footer-item">
+              <strong style="font-size:18px">Ателье | Мастерская квизов | Омск</strong>
+              <p class="small muted" style="margin-top:12px">
+                г. Омск<br>
+                +7-951-424-66-70<br>
+                atelier.omsk55@mail.ru
+              </p>
+            </div>
+
+            <div class="card footer-item">
+              <strong style="font-size:18px">Соцсети</strong>
+              <p class="small muted" style="margin-top:12px">
+                Следите за нами в социальных сетях:
+              </p>
+              <div class="social-icons">
+                <a href="https://t.me/atelier_10_r" target="_blank" class="tg">
+                  <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="https://vk.com/atelier_55" target="_blank" class="vk">
+                  <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://wa.me/79514246670" target="_blank" class="wa">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
               </div>
-              <div style="text-align:right">
-                <div class="ks">Часы</div>
-                <div style="font-weight:600;margin-top:4px">12:00 — 23:00</div>
-              </div>
-            </div>
-            <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(139,94,60,0.08)">
-              <div class="ks">Телефон</div>
-              <div style="font-weight:600;margin-top:4px">+7-951-424-66-70</div>
             </div>
           </div>
-        </aside>
-      </section>
 
-      <section id="workshops">
-        <div class="section-title">
-          <h3>Мастерские Ателье</h3>
-          <div class="ks">Пять уникальных форматов для общения и отдыха</div>
-        </div>
-
-        <div class="grid">
-          <article class="quiz">
-            <div class="quiz-duration">8 раундов</div>
-            <img class="img" src="Тематик 2.png" alt="Тематик">
-            <div class="meta">
-              <h4>Тематик</h4>
-              <p>Игра, посвященная конкретной теме, области знаний или увлечений (кино, школа, спорт и т.д.).</p>
-            </div>
-          </article>
-          
-          <article class="quiz">
-            <div class="quiz-duration">6 раундов</div>
-            <img class="img" src="Музыкалити .png" alt="Музыкалити">
-            <div class="meta">
-              <h4>Музыкалити</h4>
-              <p>Музыкальная игра, начиная от легких вопросов, продолжая викториной и заканчивая коллективным караоке.</p>
-            </div>
-          </article>
-          
-          <article class="quiz">
-            <div class="quiz-duration">3 раунда</div>
-            <img class="img" src="Музлото.png" alt="Музыкальное лото">
-            <div class="meta">
-              <h4>Музыкальное лото</h4>
-              <p>Ностальгическое лото, где вместо чисел — музыкальные композиции. Вспомните песни из детства и юности.</p>
-            </div>
-          </article>
-          
-          <article class="quiz">
-            <div class="quiz-duration">4 раунда</div>
-            <img class="img" src="Морской бой.png" alt="Квизо-морской бой">
-            <div class="meta">
-              <h4>Квизо-морской бой</h4>
-              <p>Игра, где правила каждый раз комбинируются и меняются, но всегда в формате морского боя.</p>
-            </div>
-          </article>
-          
-          <article class="quiz">
-            <div class="quiz-duration">4 раунда</div>
-            <img class="img" src="Микс.png" alt="Микс">
-            <div class="meta">
-              <h4>Микс</h4>
-              <p>Игра, которая вместила в себя все элементы мастерских «Ателье» — идеальный вариант для первого знакомства.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="about" style="margin-top:40px">
-        <div class="card">
-          <h3 style="margin-top:0;font-size:28px">Философия Ателье</h3>
-          <p class="muted" style="margin-top:16px;font-size:16px;line-height:1.7">
-            Ателье — это дом, где можно расслабиться, одеться, как пожелаете, и забыть то, что вас тревожит в жизни. 
-            Мы создали это пространство для того, чтобы вы смогли встретиться с близкими по духу людьми, вспомнить прошлое, 
-            прожить настоящее и подумать о будущем. Наша философия — создание атмосферы, где игры становятся лишь поводом 
-            для настоящего человеческого общения.
-          </p>
-          <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
-            <div class="pill">✓ Пространство для общения</div>
-            <div class="pill">✓ Уютная атмосфера</div>
-            <div class="pill">✓ Близкие по духу люди</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contacts" style="margin-top:60px">
-        <div class="section-title">
-          <h3>Присоединяйтесь</h3>
-          <div class="ks">Приходите в гости — как к друзьям</div>
-        </div>
-
-        <div class="footer-grid">
-          <div class="card footer-item">
-            <strong style="font-size:18px">Ателье | Мастерская квизов | Омск</strong>
-            <p class="small muted" style="margin-top:12px">
-              г. Омск<br>
-              +7-951-424-66-70<br>
-              atelier.omsk55@mail.ru
-            </p>
-          </div>
-
-          <div class="card footer-item">
-            <strong style="font-size:18px">Часы работы</strong>
-            <p class="small muted" style="margin-top:12px">
-              Ежедневно 12:00 — 23:00<br>
-              Предварительная запись за 24 часа
-            </p>
-          </div>
-
-          <div class="card footer-item">
-            <strong style="font-size:18px">Соцсети</strong>
-            <p class="small muted" style="margin-top:12px">
-              Напишите нам в WhatsApp:
-            </p>
-            <div class="social-container">
-              <a href="https://wa.me/79514246670" class="whatsapp-icon" target="_blank">
-                <svg viewBox="0 0 32 32">
-                  <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.65.872 5.096 2.346 7.102L5 29l7.128-1.873A11.9 11.9 0 0 0 16.001 27c6.627 0 12-5.373 12-12S22.628 3 16.001 3zm0 21a9.04 9.04 0 0 1-4.578-1.26l-.327-.194-4.232 1.112 1.13-4.124-.211-.33A9.04 9.04 0 0 1 7 15c0-4.963 4.038-9 9.001-9 4.962 0 9 4.037 9 9s-4.038 9-9 9zm5.308-6.774c-.29-.145-1.71-.84-1.975-.934-.264-.097-.457-.145-.65.145-.193.29-.747.933-.915 1.126-.169.193-.338.217-.628.073-.29-.145-1.226-.452-2.333-1.442-.862-.768-1.442-1.715-1.611-2.005-.169-.29-.018-.446.127-.59.13-.13.29-.338.435-.507.145-.169.193-.29.29-.483.097-.193.048-.362-.024-.507-.073-.145-.65-1.57-.89-2.145-.233-.562-.47-.486-.65-.495l-.555-.01c-.193 0-.507.073-.774.362-.266.29-1.017.993-1.017 2.418 0 1.426 1.042 2.802 1.187 2.996.145.193 2.051 3.127 4.969 4.384.695.3 1.236.48 1.657.615.696.222 1.33.19 1.83.115.558-.083 1.71-.698 1.952-1.372.241-.674.241-1.253.169-1.372-.073-.12-.265-.193-.555-.338z"/>
-                </svg>
-              </a>
-              <span style="font-weight:600">+7-951-424-66-70</span>
-            </div>
-          </div>
-        </div>
-
-        <footer>
-          <div class="ks">© 2025 Ателье | Мастерская квизов | Омск — Пространство для встреч и общения</div>
-        </footer>
-      </section>
-    </main>
+          <footer>
+            <div class="ks">Ателье Мастерская где создаются игры и проводятся праздники. Место где можно расслабиться и весело провести время с друзьями.</div>
+            <div class="ks" style="margin-top:8px">© 2025 Ателье | Мастерская квизов | Омск — Пространство для встреч и общения</div>
+          </footer>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script>
-    // Бургер меню
-    const burgerMenu = document.getElementById('burgerMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenu = document.getElementById('closeMenu');
-    
-    burgerMenu.addEventListener('click', function() {
-      this.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-    });
-    
-    // Закрытие меню при клике на кнопку закрытия
-    closeMenu.addEventListener('click', function() {
-      burgerMenu.classList.remove('active');
-      mobileMenu.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-    
-    // Закрытие меню при клике на ссылку
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', function() {
+    // Управление загрузочным экраном
+    document.addEventListener('DOMContentLoaded', function() {
+      const loader = document.getElementById('loader');
+      const mainContent = document.getElementById('main-content');
+      
+      // Всегда показываем загрузочный экран и скрываем через 3 секунды
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+          loader.style.display = 'none';
+          mainContent.classList.add('loaded');
+        }, 500);
+      }, 3000); // 3 секунды для полной анимации
+
+      // Бургер меню
+      const burgerMenu = document.getElementById('burgerMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenu = document.getElementById('closeMenu');
+      
+      burgerMenu.addEventListener('click', function() {
+        this.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+      
+      // Закрытие меню при клике на кнопку закрытия
+      closeMenu.addEventListener('click', function() {
         burgerMenu.classList.remove('active');
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
       });
-    });
-
-    // Плавная прокрутка
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',function(e){
-        const href=this.getAttribute('href');
-        if(href.length>1){
-          e.preventDefault();
-          const el=document.querySelector(href);
-          if(el) window.scrollTo({top:el.offsetTop-40,behavior:'smooth'});
-        }
+      
+      // Закрытие меню при клике на ссылку
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          burgerMenu.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
       });
-    });
 
-    // Хедер при скролле
-    const header=document.getElementById('header');
-    window.addEventListener('scroll',()=>{
-      if(window.scrollY>80) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
-    });
-
-    // Анимация появления при скролле
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+      // Плавная прокрутка
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click',function(e){
+          const href=this.getAttribute('href');
+          if(href.length>1){
+            e.preventDefault();
+            const el=document.querySelector(href);
+            if(el) window.scrollTo({top:el.offsetTop-40,behavior:'smooth'});
+          }
+        });
       });
-    },{threshold:0.1});
 
-    document.querySelectorAll('.card,.grid,.footer-item,.hero-left h2,.hero-left p,.features').forEach(el=>observer.observe(el));
+      // Хедер при скролле
+      const header=document.getElementById('header');
+      window.addEventListener('scroll',()=>{
+        if(window.scrollY>80) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      });
 
-    // Клик по карточке
-    document.querySelectorAll('.quiz').forEach(card=>{
-      card.addEventListener('click',()=>{
-        const title=card.querySelector('h4')?.innerText||'Мастерская Ателье';
-        const duration=card.querySelector('.quiz-duration')?.innerText||'';
-        
-        // Более информативное сообщение
-        alert(`🎮 ${title} ${duration ? `(${duration})` : ''}\n\nОтличный выбор! Эта мастерская идеально подходит для встречи с друзьями.\n\nДля записи позвоните нам: +7-951-424-66-70 или напишите на atelier.omsk55@mail.ru`);
+      // Анимация появления при скролле
+      const observer=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.1});
+
+      document.querySelectorAll('.card,.grid,.footer-item,.hero-left h2,.hero-left p,.features').forEach(el=>observer.observe(el));
+
+      // Клик по карточке
+      document.querySelectorAll('.quiz').forEach(card=>{
+        card.addEventListener('click',()=>{
+          const title=card.querySelector('h4')?.innerText||'Мастерская Ателье';
+          const duration=card.querySelector('.quiz-duration')?.innerText||'';
+          
+          // Более информативное сообщение
+          alert(`🎮 ${title} ${duration ? `(${duration})` : ''}\n\nОтличный выбор! Эта мастерская идеально подходит для встречи с друзьями.\n\nДля записи позвоните нам: +7-951-424-66-70 или напишите на atelier.omsk55@mail.ru`);
+        });
       });
     });
   </script>
