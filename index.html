@@ -33,13 +33,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .loader-content {
       text-align: center;
       position: relative;
       z-index: 1;
-      padding: 4rem;
+      padding: 2rem;
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px);
       border-radius: 20px;
@@ -47,6 +49,9 @@
       box-shadow: 
         0 25px 50px rgba(0, 0, 0, 0.08),
         0 0 0 1px rgba(255, 255, 255, 0.8);
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
     }
 
     /* Сетка на фоне */
@@ -64,18 +69,44 @@
     }
 
     .logo-grid {
-      display: inline-grid;
-      grid-template-columns: auto 2px auto;
-      gap: 2rem;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-bottom: 3rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Десктопная версия */
+    @media (min-width: 769px) {
+      .logo-grid {
+        display: inline-grid;
+        grid-template-columns: auto 2px auto;
+        gap: 2rem;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
     }
 
     .logo-text {
-      font-size: 2.8rem;
+      font-size: 2rem;
       font-weight: 700;
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Адаптивные размеры шрифта */
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .logo-text {
+        font-size: 1.4rem;
+      }
     }
 
     /* Ателье появляется первым */
@@ -90,30 +121,46 @@
 
     .separator-vertical {
       width: 2px;
-      height: 60px;
+      height: 40px;
       background: linear-gradient(to bottom, transparent, var(--accent), transparent);
       opacity: 0;
       animation: fadeIn 0.4s ease-out 0.4s forwards;
     }
 
+    /* На мобильных скрываем разделитель */
+    @media (max-width: 768px) {
+      .separator-vertical {
+        display: none;
+      }
+    }
+
     .description-block {
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
     .description {
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       color: var(--text);
       font-weight: 300;
-      line-height: 1.6;
+      line-height: 1.5;
       opacity: 0;
       animation: fadeInUp 0.5s ease-out 1s forwards;
+      text-align: center;
+    }
+
+    /* Адаптивные размеры для описания */
+    @media (max-width: 480px) {
+      .description {
+        font-size: 1rem;
+        line-height: 1.4;
+      }
     }
 
     .location-chip {
       display: inline-flex;
       align-items: center;
       gap: 0.8rem;
-      padding: 1rem 2.5rem;
+      padding: 0.8rem 1.5rem;
       background: var(--card);
       border: 1px solid var(--accent);
       border-radius: 25px;
@@ -122,6 +169,33 @@
       opacity: 0;
       animation: fadeIn 0.4s ease-out 1.2s forwards;
       box-shadow: 0 8px 20px rgba(193, 150, 106, 0.15);
+      font-size: 0.9rem;
+    }
+
+    /* Адаптивные отступы для загрузчика */
+    @media (max-width: 480px) {
+      .loader-content {
+        padding: 1.5rem;
+      }
+      
+      .logo-grid {
+        margin-bottom: 1.5rem;
+      }
+      
+      .description-block {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .loader-content {
+        padding: 1rem;
+      }
+      
+      .location-chip {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+      }
     }
 
     /* Анимации */
@@ -134,7 +208,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(15px);
       }
       to {
         opacity: 1;
@@ -610,7 +684,7 @@
         <section class="hero">
           <div class="hero-left">
             <h2>Ателье — дом, где можно расслабиться и забыть тревоги</h2>
-            <p>Ателье — это пространство, созданное для встреч с близкими по духу людьми, где можно вспомнить прошлое, прожить настоящее и подумать о будущем. Здесь вы можете одеться, как пожелаете, и провести время в уютной атмосфере, отвечая на интересные вопросы, соревнуясь или открывая для себя что-то новое.</p>
+            <p>Ателье — это пространство, созданное для встреч с близкими по духу людьми, где можно вспомнить прошлое, прожить настоящее и подумать о будущем. Здесь вы можете одетьться, как пожелаете, и провести время в уютной атмосфере, отвечая на интересные вопросы, соревнуясь или открывая для себя что-то новое.</p>
             
             <div class="features">
               <div class="feature-item">
